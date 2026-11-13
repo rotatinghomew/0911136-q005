@@ -1,0 +1,43 @@
+{
+  "conditions": {
+    "keys": [
+      "plot_id",
+      "day"
+    ],
+    "columns": [
+      "plot_id",
+      "village_id",
+      "day",
+      "rain_mm",
+      "soil_wetness",
+      "crop",
+      "process_id"
+    ]
+  },
+  "visits": {
+    "keys": [
+      "visit_id"
+    ],
+    "columns": [
+      "visit_id",
+      "plot_id",
+      "visited_on",
+      "known_at",
+      "status",
+      "work_start",
+      "work_end"
+    ]
+  },
+  "requests": {
+    "keys": [
+      "request_id"
+    ],
+    "columns": [
+      "request_id",
+      "plot_id",
+      "cutoff",
+      "horizon_days",
+      "visit_budget"
+    ]
+  }
+}
