@@ -7,6 +7,7 @@ from http.server import ThreadingHTTPServer
 
 from .analysis import summarize
 from .datasource import SourceClient
+from .planning import plan
 from .reports import package_report, save_report
 from .service import handler_for, load_repository, serve
 
@@ -16,6 +17,7 @@ def main():
     parser.add_argument("--dataset", default="fixtures/dataset.json")
     parser.add_argument("--source-url")
     parser.add_argument("--output", default="/tmp/domain-summary.json")
+    parser.add_argument("--plan-output", help="额外保存未来一周窗口排期建议")
     parser.add_argument("--serve", action="store_true")
     parser.add_argument("--port", type=int, default=8765)
     arguments = parser.parse_args()
@@ -36,6 +38,10 @@ def main():
     report = package_report(snapshot, summarize(snapshot.tables))
     save_report(arguments.output, report)
     print(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False))
+    if arguments.plan_output:
+        planning = package_report(snapshot, plan(snapshot.tables))
+        save_report(arguments.plan_output, planning)
+        print(json.dumps(planning, ensure_ascii=False, indent=2, allow_nan=False))
 
 
 if __name__ == "__main__":
